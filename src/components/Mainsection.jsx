@@ -1,18 +1,37 @@
-import { useEffect,useState } from "react"
+import { Minus, Plus } from "lucide-react"
+import { useEffect, useState } from "react"
 
-
-export default function Mainsection () {
+const useProductURL = () => {
     const [loading, setLoading] = useState(true)
     const [jewelry, setJewelry] = useState([])
+    const [error, setError] = useState(null)
 
     useEffect(() => {
-        fetch('https://fakestoreapi.com/products/category/jewelery?limit=4')
-            .then(res=>res.json())
-            .then(json=> setJewelry(json))
-            .catch((error) => console.log(error))
+        fetch('https://fakestoreapi.com/products/category/jewelery?limit=4', {mode:'cors'})
+            .then((response) => {
+                if (!response.ok) {
+                    setError(true)
+                    throw new Error ('network response was not okay')
+                }
+                return response.json()
+            })
+            .then(response=> setJewelry(response))
+            .catch((error) => {
+                console.error('Fetching error:', error)
+                setError(error.message)
+            })
             .finally(() => setLoading(false))
 
     },[])
+
+    return { loading, jewelry, error}
+
+}
+
+export default function Mainsection () {
+   const { loading, jewelry, error} = useProductURL()
+   const [count, setCount] = useState(0)
+   
     return (
         <div className="text-center">
            <button className="text-white my-4 rounded-full p-2 border-2 border-slate-400 hover:bg-white hover:text-black">New Spring Collection 2024</button>
@@ -20,6 +39,9 @@ export default function Mainsection () {
            <p className="text-slate-400 w-1/4 my-0 mx-auto text-xs mb-2">Unveiling a fashion destination where trends blends seamlessly with your individual style aspirations. Discover today!</p>
             {loading && (
               <p className="text-white text-2xl">...Loading</p>
+            )}
+            {error && (
+                <p>{error}</p>
             )}
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mx-auto px-4">
                 {jewelry.map((item) => (
@@ -34,8 +56,13 @@ export default function Mainsection () {
                     <div className="p-4 flex flex-col flex-grow">
                         <h3 className="text-lg font-semibold mb-2 text-gray-800 truncate">{item.title}</h3>
                         <p className="text-gray-600 font-medium mb-3">${item.price.toFixed(2)}</p>
+                        <div className="flex my-0 mx-auto">
+                            <button onClick={() => count < 1 ? setCount(0) : setCount(count - 1)}><Minus /></button>
+                            <p>{count}</p>
+                            <button onClick={() => setCount(count + 1)}><Plus /></button>
+                        </div>
                         <button className="mt-auto w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300">
-                        Shop Now
+                        Add to Cart
                         </button>
                     </div>
                     </div>

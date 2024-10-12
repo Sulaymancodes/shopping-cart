@@ -1,35 +1,10 @@
 import { Minus, Plus } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { useProductURL } from "../hook/UseProductURL"
 
-const useProductURL = () => {
-    const [loading, setLoading] = useState(true)
-    const [jewelry, setJewelry] = useState([])
-    const [error, setError] = useState(null)
-
-    useEffect(() => {
-        fetch('https://fakestoreapi.com/products/category/jewelery?limit=4', {mode:'cors'})
-            .then((response) => {
-                if (!response.ok) {
-                    setError(true)
-                    throw new Error ('network response was not okay')
-                }
-                return response.json()
-            })
-            .then(response=> setJewelry(response))
-            .catch((error) => {
-                console.error('Fetching error:', error)
-                setError(error.message)
-            })
-            .finally(() => setLoading(false))
-
-    },[])
-
-    return { loading, jewelry, error}
-
-}
 
 export default function Mainsection () {
-   const { loading, jewelry, error} = useProductURL()
+   const { loading, jewelry, error} = useProductURL('https://fakestoreapi.com/products/category/jewelery?limit=4')
    const [count, setCount] = useState(0)
    
     return (
@@ -72,3 +47,4 @@ export default function Mainsection () {
     
     )
 }
+

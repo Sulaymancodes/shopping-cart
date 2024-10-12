@@ -1,15 +1,34 @@
 import { ShoppingCart, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from "react-router-dom";
+
 const Navbar = () => {
   const [activeItem, setActiveItem] = useState('Home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation(); // Get the current location
+
+  // Update active item based on the current path
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === '/') {
+      setActiveItem('Home');
+    } else if (path === '/shop') {
+      setActiveItem('Shop');
+    }
+  }, [location]);
+
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "Shop", path: "/shop" },
+    { name: "Sale", path: "/sale" },
+    { name: "Blog", path: "/blog" },
+    { name: "Showcase", path: "/showcase" }
+  ];
 
   const handleItemClick = (item) => {
     setActiveItem(item);
     setIsMenuOpen(false);
   };
-
-  const navItems = ["Home", "Shop", "Sale", "Blog", "Showcase"];
 
   return (
     <div className="py-2 px-4 bg-slate-950">
@@ -29,15 +48,15 @@ const Navbar = () => {
           <ul className="flex justify-between">
             {navItems.map((item) => (
               <li
-                key={item}
+                key={item.name}
                 className={`text-center p-2 rounded-full w-1/5 cursor-pointer ${
-                  activeItem === item
+                  activeItem === item.name
                     ? "bg-white text-black"
                     : "text-white hover:bg-slate-800"
                 }`}
-                onClick={() => handleItemClick(item)}
+                onClick={() => handleItemClick(item.name)}
               >
-                <a href="#">{item}</a>
+                <Link to={item.path}>{item.name}</Link>
               </li>
             ))}
           </ul>
@@ -58,15 +77,15 @@ const Navbar = () => {
             <ul className="flex flex-col space-y-2">
               {navItems.map((item) => (
                 <li
-                  key={item}
+                  key={item.name}
                   className={`text-center p-2 rounded-full cursor-pointer ${
-                    activeItem === item
+                    activeItem === item.name
                       ? "bg-white text-black"
                       : "text-white hover:bg-slate-800"
                   }`}
-                  onClick={() => handleItemClick(item)}
+                  onClick={() => handleItemClick(item.name)}
                 >
-                  <a href="#">{item}</a>
+                  <Link to={item.path}>{item.name}</Link>
                 </li>
               ))}
             </ul>

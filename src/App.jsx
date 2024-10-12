@@ -14,6 +14,7 @@ function App() {
   return (
     <div className="bg-slate-950 min-h-screen m-0 p-0">
       <Navbar activeItem={activeItem} handleItemClick={handleItemClick}/>
+      <Link to={"profile"}>Click here to go to Home Page</Link>
       <Mainsection />
       <Footer />
     </div>

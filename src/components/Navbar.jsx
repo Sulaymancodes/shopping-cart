@@ -44,19 +44,18 @@ const Navbar = () => {
         </button>
 
         {/* Desktop navigation */}
-        <nav className="hidden lg:block p-1 rounded-full bg-slate-500 bg-opacity-15 w-2/4">
+        <nav className="hidden lg:block p-4 rounded-full bg-slate-500 bg-opacity-15 w-2/4">
           <ul className="flex justify-between">
             {navItems.map((item) => (
               <li
                 key={item.name}
-                className={`text-center p-2 rounded-full w-1/5 cursor-pointer ${
+                onClick={() => handleItemClick(item.name)}
+              >
+                <Link className={`text-center p-2 rounded-full w-1/5 cursor-pointer ${
                   activeItem === item.name
                     ? "bg-white text-black"
                     : "text-white hover:bg-slate-800"
-                }`}
-                onClick={() => handleItemClick(item.name)}
-              >
-                <Link to={item.path}>{item.name}</Link>
+                }`} to={item.path}>{item.name}</Link>
               </li>
             ))}
           </ul>

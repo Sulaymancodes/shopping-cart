@@ -1,50 +1,81 @@
 import Navbar from "./Navbar";
-import Footer from "./Footer";
+import DefaultShop from "./DefaultShop";
+import Cart from "./Cart";
 import { useProductURL } from "../hook/UseProductURL";
+import { useParams } from "react-router-dom"
 import { Minus, Plus } from "lucide-react"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Shop () {
     const { loading, shopItems, error} = useProductURL('https://fakestoreapi.com/products')
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState([])
+    const [cartMsg, setCartMsg] = useState(false)
+    const [cartArr, setCartArr] = useState([])
+    const [cartArrCount, setCartArrCount] = useState([])
     
+    useEffect(() => {
+        setCount(Array(shopItems.length).fill(0))
+    },[shopItems])
+  
+    function addCount (index) {
+        const newCount = [...count];
+        newCount[index] += 1;
+        setCount(newCount)
+    }
+
+    function minusCount (index) {
+        const newCount = [...count];
+        if (newCount[index] > 0) {
+            newCount[index] -= 1
+        }
+        setCount(newCount)
+    }
+   
+    function handleAddtoCart (index) {
+        if (count[index] > 0) {
+            setCartArr([...cartArr, shopItems[index]])
+            setCartArrCount([...cartArrCount, count[index]])
+            setCartMsg(true)
+            setTimeout(() => {
+                setCartMsg(false)
+            }, 1000);
+        } 
+    }
+
+    function updateQuantity(index, change) {
+        const newCartArrCount = [...cartArrCount];
+        newCartArrCount[index] += change;
+        if (newCartArrCount[index] <= 0) {
+            // Remove item from cart if quantity becomes 0 or negative
+            setCartArr(cartArr.filter((_, i) => i !== index));
+            setCartArrCount(cartArrCount.filter((_, i) => i !== index));
+        } else {
+            setCartArrCount(newCartArrCount);
+        }
+    }
+
+
+    const { name } = useParams()
+
      return (
+       
         <>
-        <Navbar />
-        <div className="text-center mt-10 ">
-             {loading && (
-               <p className="text-black text-2xl">...Loading</p>
-             )}
-             {error && (
-                 <p className="text-5xl">{error}</p>
-             )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mx-auto px-4">
-                 {shopItems.map((item) => (
-                     <div key={item.id} className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 flex flex-col">
-                     <div className="aspect-square relative overflow-hidden bg-gray-100">
-                         <img 
-                         src={item.image} 
-                         alt={item.title} 
-                         className="absolute inset-0 w-full h-full object-contain"
-                         />
-                     </div>
-                     <div className="p-4 flex flex-col flex-grow">
-                         <h3 className="text-lg font-semibold mb-2 text-gray-800 truncate">{item.title}</h3>
-                         <p className="text-gray-600 font-medium mb-3">${item.price.toFixed(2)}</p>
-                         <div className="flex my-0 mx-auto">
-                             <button onClick={() => count < 1 ? setCount(0) : setCount(count - 1)}><Minus /></button>
-                             <p>{count}</p>
-                             <button onClick={() => setCount(count + 1)}><Plus /></button>
-                         </div>
-                         <button className="mt-auto w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300">
-                         Add to Cart
-                         </button>
-                     </div>
-                     </div>
-                 ))}
-            </div>
-            <Footer />
-         </div>
+            <Navbar itemCount={cartArr.length} />
+            {name === 'cart' ? (
+                <Cart cartArr={cartArr} cartArrCount={cartArrCount} updateQuantity={updateQuantity}/>
+            ) :
+            <DefaultShop 
+                cartMsg={cartMsg} 
+                loading={loading}
+                error={error}
+                shopItems={shopItems}
+                count={count}
+                Minus={Minus}
+                Plus={Plus}
+                addCount={addCount}
+                minusCount={minusCount}
+                handleAddtoCart={handleAddtoCart}
+            />}
         </>
          
      

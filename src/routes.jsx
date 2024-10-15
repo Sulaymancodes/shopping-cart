@@ -2,6 +2,7 @@ import App from "./App";
 import Shop from "./components/Shop";
 import ErrorPage from "./components/ErrorPage";
 
+
 const routes = [
     {
         path: '/',
@@ -10,9 +11,10 @@ const routes = [
     },
 
     {
-        path: 'shop',
-        element: <Shop />,
+        path: 'shop/:name',
+        element: <Shop />
     }
+    
 ]
 
 export default routes;

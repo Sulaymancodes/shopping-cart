@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 export const useProductURL = (url) => {
     const [loading, setLoading] = useState(true)
-    const [jewelry, setJewelry] = useState([])
+    const [shopItems, setShopItems] = useState([])
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -14,15 +14,19 @@ export const useProductURL = (url) => {
                 }
                 return response.json()
             })
-            .then(response=> setJewelry(response))
+            .then(response=> setShopItems(response))
             .catch((error) => {
                 console.error('Fetching error:', error)
-                setError(error.message)
+                if (error.message === 'Failed to fetch') {
+                    setError('No Internet Connection')
+                } else {
+                    setError(error.message)
+                }
             })
             .finally(() => setLoading(false))
 
     },[])
 
-    return { loading, jewelry, error}
+    return { loading, shopItems, error}
 
 }

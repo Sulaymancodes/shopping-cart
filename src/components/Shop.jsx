@@ -5,21 +5,21 @@ import { Minus, Plus } from "lucide-react"
 import { useState } from "react";
 
 export default function Shop () {
-    const { loading, jewelry, error} = useProductURL('https://fakestoreapi.com/products')
+    const { loading, shopItems, error} = useProductURL('https://fakestoreapi.com/products')
     const [count, setCount] = useState(0)
     
      return (
         <>
         <Navbar />
-        <div className="text-center mt-10">
+        <div className="text-center mt-10 ">
              {loading && (
-               <p className="text-white text-2xl">...Loading</p>
+               <p className="text-black text-2xl">...Loading</p>
              )}
              {error && (
                  <p className="text-5xl">{error}</p>
              )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mx-auto px-4">
-                 {jewelry.map((item) => (
+                 {shopItems.map((item) => (
                      <div key={item.id} className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 flex flex-col">
                      <div className="aspect-square relative overflow-hidden bg-gray-100">
                          <img 

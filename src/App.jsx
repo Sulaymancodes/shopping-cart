@@ -12,10 +12,9 @@ function App() {
   };
 
   return (
-    <div className="bg-slate-950 min-h-screen m-0 p-0">
+    <div className=" bg-slate-950 min-h-screen m-0 p-0">
       <Navbar activeItem={activeItem} handleItemClick={handleItemClick}/>
       <Mainsection />
-      <Footer />
     </div>
   )
 }

@@ -33,7 +33,7 @@ const Navbar = () => {
   return (
     <div className="py-2 px-4 bg-slate-950">
       <div className="flex justify-between items-center w-full">
-        <p className="flex items-center text-xl text-white">Shopping<ShoppingCart className="ml-2" /></p>
+        <p className="flex items-center text-xl text-white">Shoppee<ShoppingCart className="ml-2" /></p>
         
         {/* Mobile menu button */}
         <button

@@ -1,9 +1,12 @@
+/* eslint-disable react/prop-types */
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import Footer from './Footer';
 
-export default function Cart({ cartArr, cartArrCount, updateQuantity }) {
+// eslint-disable-next-line react/prop-types
+export default function Cart({ cartArr, cartArrCount, updateQuantity, handleCheckOut }) {
     const total = cartArr.reduce((sum, item, index) => sum + item.price * cartArrCount[index], 0);
 
+  
     return (
         <div className="min-h-screen flex flex-col">
             {/* Cart content */}
@@ -41,7 +44,7 @@ export default function Cart({ cartArr, cartArrCount, updateQuantity }) {
                 {cartArr.length > 0 ? (
                     <div className="mt-8 flex flex-col items-end">
                         <p className="text-2xl font-bold mb-4">Grand Total: ${total.toFixed(2)}</p>
-                        <button className="bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-colors duration-300 flex items-center">
+                        <button onClick={handleCheckOut} className="bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-colors duration-300 flex items-center">
                             <ShoppingCart className="mr-2" />
                             Proceed to Checkout
                         </button>

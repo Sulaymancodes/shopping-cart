@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-import DefaultShop from "./DefaultShop";
+import DefaultShopPage from "./DefaultShopPage";
 import Cart from "./Cart";
 import { useProductURL } from "../hook/UseProductURL";
 import { useParams } from "react-router-dom"
@@ -54,6 +54,11 @@ export default function Shop () {
         }
     }
 
+    function handleCheckOut () {
+        alert('This is a demo Store, Items Successfully Checked')
+        setCartArr([])
+    }
+
 
     const { name } = useParams()
 
@@ -62,9 +67,13 @@ export default function Shop () {
         <>
             <Navbar itemCount={cartArr.length} />
             {name === 'cart' ? (
-                <Cart cartArr={cartArr} cartArrCount={cartArrCount} updateQuantity={updateQuantity}/>
+                <Cart cartArr={cartArr}
+                      cartArrCount={cartArrCount} 
+                      updateQuantity={updateQuantity}
+                      handleCheckOut={handleCheckOut}
+                />
             ) :
-            <DefaultShop 
+            <DefaultShopPage 
                 cartMsg={cartMsg} 
                 loading={loading}
                 error={error}

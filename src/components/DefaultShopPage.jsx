@@ -1,11 +1,13 @@
-export default function DefaultShop ({cartMsg, loading, error, shopItems, count, Minus, Plus, addCount, minusCount, handleAddtoCart} ) {
+/* eslint-disable react/prop-types */
+export default function DefaultShopPage ({cartMsg, loading, error, shopItems, count, Minus, Plus, addCount, minusCount, handleAddtoCart} ) {
     return (
         <>
         {cartMsg && (
-            <div className="rounded-md p-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 w-1/5 z-50">
-            <p className="text-white text-xl">Item Added Successfully</p>
-            </div>
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 p-4 rounded-md w-[90%] max-w-sm h-auto z-50">
+            <p className="text-white text-xl text-center">Item Added Successfully</p>
+          </div>
         )}
+
         <div className="text-center mt-10 ">
              {loading && (
                <p className="text-black text-2xl">...Loading</p>

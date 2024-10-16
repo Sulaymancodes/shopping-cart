@@ -1,5 +1,4 @@
 import Footer from "./Footer"
-import { Link } from "lucide-react"
 import { useProductURL } from "../hook/UseProductURL"
 
 export default function Mainsection () {

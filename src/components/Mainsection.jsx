@@ -28,15 +28,18 @@ export default function Mainsection () {
         <div className="min-h-screen flex flex-col">
             {/* Header or any top content */}
             <div className="text-center flex-grow mb-4">
-                <button className="text-white my-4 rounded-full p-2 border-2 border-slate-400 hover:bg-white hover:text-black">
-                    New Spring Collection 2024
-                </button>
-                <h1 className="text-white font-mono text-4xl w-2/4 my-0 mx-auto">
-                    Where style speaks, trends resonate, fashion flourishes
-                </h1>
-                <p className="text-slate-400 w-1/4 my-0 mx-auto text-xs mb-2">
-                    Unveiling a fashion destination where trends blend seamlessly with your individual style aspirations. Discover today!
-                </p>
+            <button className="text-white my-4 rounded-full p-2 border-2 border-slate-400 hover:bg-white hover:text-black text-sm md:text-base">
+                New Spring Collection 2024
+            </button>
+
+            <h1 className="text-white font-mono text-2xl md:text-4xl w-11/12 md:w-2/4 my-0 mx-auto text-center">
+                Where style speaks, trends resonate, fashion flourishes
+            </h1>
+
+            <p className="text-slate-400 w-10/12 md:w-1/4 my-0 mx-auto text-xs md:text-sm mb-2 text-center">
+                Unveiling a fashion destination where trends blend seamlessly with your individual style aspirations. Discover today!
+            </p>
+
     
                 {/* Loading and error states */}
                 {loading && <p className="text-white text-4xl">...Loading</p>}

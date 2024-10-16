@@ -14,18 +14,22 @@ Welcome to the Shopping Cart Application! This project allows users to browse pr
 ### Installation
 1. Clone the repository:
    
-bash
+```bash
    git clone https://github.com/Sulaymancodes/shopping-cart.git
+```
 2. Navigate to the project directory
-bash
+```bash
    cd shopping-cart
+```
 4. Install the dependencies
    
-bash
+```bash
    npm install
+```
 6. Running the Application
-bash
+```bash
    npm run dev
+```
 
 ## Usage
 - Browse Products: View the available products listed on the homepage.
